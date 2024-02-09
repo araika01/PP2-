@@ -1,5 +1,3 @@
-# Dictionary of movies
-
 movies = [
 {
 "name": "Usual Suspects", 
@@ -77,3 +75,9 @@ movies = [
 "category": "Romance"
 }
 ]
+def average(movies):
+    if not movies:
+        return False
+    total = sum(movie["imdb"] for movie in movies)
+    return total/len(movies)
+print(average(movies))

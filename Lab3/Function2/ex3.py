@@ -77,3 +77,7 @@ movies = [
 "category": "Romance"
 }
 ]
+def category(movies, category):
+    return[movie for movie in movies if movie["category"]==category]
+category_name = input()
+print(category(movies, category_name))

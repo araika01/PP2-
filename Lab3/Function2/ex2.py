@@ -76,3 +76,6 @@ movies = [
 "category": "Romance"
 }
 ]
+def above(movies):
+    return[movie for movie in movies if movie["imdb"] > 5.5]
+print(above(movies))

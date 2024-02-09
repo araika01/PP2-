@@ -77,3 +77,11 @@ movies = [
 "category": "Romance"
 }
 ]
+def average(movies, category):
+    category_movie = [movie for movie in movies if movie["category"]==category]
+    if not category_movie:
+        return 0
+    total = sum(movie["imdb"] for movie in  category_movie)
+    return total/len(category_movie)
+category_name = input()
+print(average(movies, category_name))

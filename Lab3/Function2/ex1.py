@@ -1,5 +1,4 @@
-# Dictionary of movies
-
+# Dictionary of movi
 movies = [
 {
 "name": "Usual Suspects", 
@@ -77,3 +76,12 @@ movies = [
 "category": "Romance"
 }
 ]
+index = int(input())
+print(movies[index]["imdb"])
+
+def check_imdb(movie):
+    if movie["imdb"] > 5.5:
+        return True
+    else:
+        return False
+print(check_imdb(movies[index]))
