@@ -1,6 +1,3 @@
-n = int(input())
-t = ()
-s = list(t)
-for i in range(n):
-    s.append((input()))
-print(all(t))
+tup1 = (True, 1, True)
+tup2 = (False, 0 , True)
+print( all(tup1), all(tup2))
