@@ -4,7 +4,7 @@ pygame.init()
 pygame.mixer.init()
 
 def play_a_different_song():
-    global currently_playing_song, songs, curren_song_index
+    global currently_playing_song, songs, current_song_index
     next_song_index = (current_song_index + 1) % len(songs)
     currently_playing_song = songs[next_song_index]
     pygame.mixer.music.load(currently_playing_song)
