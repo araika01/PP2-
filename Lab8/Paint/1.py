@@ -1,133 +1,78 @@
 import pygame
-import random
+
+
+def rect(screen):
+    x_local, y_local = x, y
+    width, height = x2-x, y2-y
+    if x2 < x:
+        x_local = x2
+        width = x - x2
+    if y2 < y:
+        y_local = y2
+        height = y - y2
+
+    pygame.draw.rect(screen, colors[current_color], (x_local, y_local, width, height), width=3)
+
+def circle(screen):
+    pygame.draw.circle(screen, colors[current_color], (x,y), radius=((x2-x)**2+(y2-y)**2)**0.5, width=3)
+
+def eraser(screen):
+    pygame.draw.circle(screen_work, (0, 0, 0), (x2, y2), radius=10)
+    #global x, y, x2, y2
+    #pygame.draw.line(screen_work, (0, 0, 0), (x, y), (x2, y2), width=20)
+    #x, y = x2, y2
+
 
 pygame.init()
+screen = pygame.display.set_mode((1200, 800))
+screen_work = pygame.Surface(screen.get_size())
+instruments = pygame.Surface((295, 50))
+pygame.draw.rect(instruments, (255, 255, 255), (5, 5, 40, 40), width=3)
+pygame.draw.circle(instruments, (255, 255, 255), (75, 25), radius=20, width=3)
+pygame.draw.rect(instruments, (255, 255, 255), (105, 5, 30, 40), width=0)
+pygame.draw.rect(instruments, (200, 0, 0), (105, 5, 30, 15))
+pygame.draw.rect(instruments, (255, 0, 0), (145, 5, 40, 40))
+pygame.draw.rect(instruments, (0, 255, 0), (195, 5, 40, 40))
+pygame.draw.rect(instruments, (0, 0, 255), (245, 5, 40, 40))
 
-W = 960
-H = 640
-FPS = 60
-draw = False
-lastPos = (0, 0)
-radius = 7
-color = 'red'
-mode = 'pen'
-
-screen = pygame.display.set_mode((W, H))
-pygame.display.set_caption('Paint')
+colors = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255)}
+current_color = 'red'
+modes = {'rect':rect, 'circle':circle, 'eraser':eraser}
+current_mode = 'rect'
 clock = pygame.time.Clock()
-screen.fill(pygame.Color('white'))
-fontRadius = pygame.font.SysFont('Arial', 66, bold = True)
+x, y, x2, y2 = -1, -1, -1, -1
 
-def drawLine(screen, start, end, width, colorRed):
-    x1 = start[0]
-    x2 = end[0]
-    y1 = start[1]
-    y2 = end[1]
-    
-    dx = abs(x1 - x2)
-    dy = abs(y1 - y2)
-    
-    A = y2 - y1
-    B = x1 - x2
-    C = x2 * y1 - x1 * y2
-    
-    if dx > dy:
-        if x1 > x2:
-            x1, x2 = x2, x1
-            y1, y2 = y2, y1
-        for x in range(x1, x2):
-            y = (- C - A * x) / B
-            pygame.draw.circle(screen, colorRed, (x, y), width)
-    else:
-        if y1 . y2:
-            x1, x2 = x2, x2
-            y1, y2 = y2, y1
-        for y in range(y1, y2):
-            x = (-C - B * y) / A
-            pygame.draw.circle(screen, colorRed, (x, y), width)
-            
-def drawCircle(screen, start, end, width, colorRed):
-    x1 = start[0]
-    x2 = end[0]
-    y1 = start[1]
-    y2 = end[1]
-    x = (x1 + x2) / 2
-    y = (y1 + y2) / 2
-    radius = abs(x1 - x2) / 2
-    pygame.draw.circle(screen, pygame.Color(color), (x, y), radius, width)
-    
-def drawRectangle(screen, start, end, width, color):
-    x1 = start[0]
-    x2 = end[0]
-    y1 = start[1]
-    y2 = end[1]
-    widthr = abs(x1 - x2)
-    height = abs(y1 - y2)
-    pygame.draw.rect(screen, pygame.Color(color), (x1, y2, widthr, height), width)
-
-while True:
+program = True
+while program:
+    clock.tick(120)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            exit()
-            
-        if event.type == pygame.KEYDOWN:
-            #Modes
-            if event.key == pygame.K_r:
-                mode = 'rectangle'
-            if event.key == pygame.K_c:
-                mode = 'circle'
-            if event.key == pygame.K_p:
-                mode = 'pen'
-            if event.key == pygame.K_RSHIFT:
-                mode = 'globalerase'
-            #Colors
-            if event.key == pygame.K_e:
-                mode = 'erase'
-            if event.key == pygame.K_y:
-                color = 'yellow'
-            if event.key == pygame.K_b:
-                color = 'blue'
-            if event.key == pygame.K_l:
-                color = 'red'
-            if event.key == pygame.K_g:
-                color = 'gray'
-            #random color
-            if event.key == pygame.K_z:
-                color = (random.randrange(256), random.randrange(256), random.randrange(256))
-            #Radius limits
-            if event.key == pygame.K_UP:
-                radius = min(200, radius + 1) #max limit of radius
-            if event.key == pygame.K_DOWN:
-                radius = max(1, radius - 1) #min limit os radius
-                
-        #Mouse press
+            program = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            draw = True
-            if mode == 'pen':
-                pygame.draw.circle(screen, pygame.Color(color),event.pos, radius)
-            prevPos = event.pos 
-            
-        #Mouse release
+            x, y = pygame.mouse.get_pos()
+            if 145 <= x <= 285 and 755 <= y <= 800:
+                if x<190:
+                    current_color = 'red'
+                elif x<240:
+                    current_color = 'green'
+                else:
+                    current_color = 'blue'
+            elif 0 <= x <= 145 and 755 <= y <= 800:
+                if x<50:
+                    current_mode = 'rect'
+                elif x<100:
+                    current_mode = 'circle'
+                else:
+                    current_mode = 'eraser'
+
+            x2, y2 = x, y
+        if pygame.mouse.get_pressed()[0]:
+            x2, y2 = pygame.mouse.get_pos()
+            screen.blit(screen_work, (0, 0))
+            modes[current_mode](screen)
+            screen.blit(instruments, (0, 750))
+            pygame.display.flip()
         if event.type == pygame.MOUSEBUTTONUP:
-            if mode == 'rectangle':
-                drawRectangle(screen, prevPos, event.pos, radius, color)
-            elif mode == 'circle':
-                drawCircle(screen, prevPos, event.pos, radius, color)
-            elif mode == 'globalerase':
-                screen.fill(pygame.Color('white'))
-                
-        if event.type == pygame.MOUSEMOTION:
-            if draw and mode == 'pen':
-                drawLine(screen, lastPos, event.pos, radius, color)
-            elif draw and mode == 'erase':
-                drawLine(screen, lastPos, event.pos, radius, 'white')
-            lastPos = event.pos 
-        
-    #show radius and color 
-    pygame.draw.rect(screen, pygame.Color('white'), (5, 5, 115, 75))
-    renderRadius = fontRadius.render(f'{radius}', True, pygame.Color(color))
-    screen.blit(renderRadius, (5, 5))
-    
-    #display
+            modes[current_mode](screen_work)
+    screen.blit(instruments, (0, 750))
     pygame.display.flip()
-    clock.tick(FPS)
