@@ -9,7 +9,7 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
-"""# Delete table 
+# Delete table 
 cur.execute('DROP TABLE phone_data')
 
 conn.commit()
@@ -20,7 +20,7 @@ cur.execute("""CREATE TABLE phone_data(
             first_name VARCHAR(255),
             last_name VARCHAR(255),
             phone_number VARCHAR(255)
-);""")"""
+);""")
 
 conn.commit()
 
