@@ -18,7 +18,8 @@ conn.commit()
 
 # Create a new table
 cur.execute("""CREATE TABLE phone_data(
-            name VARCHAR(255),
+            first_name VARCHAR(255),
+            last_name VARCHAR(255),
             phone_number VARCHAR(255)
 );""")
 
@@ -31,25 +32,25 @@ filename = 'PhoneBook.csv'
 with open(filename, 'r') as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
     for row in csvreader:
-        name, phone_number = row
+        first_name, last_name, phone_number = row
         
         # Create new students
-        cur.execute(f"""INSERT INTO phone_data (name, phone_number) VALUES
-            ('{name}','{phone_number}');
+        cur.execute(f"""INSERT INTO phone_data (first_name, last_name, phone_number) VALUES
+            ('{first_name}', '{last_name}','{phone_number}');
             """)
         
         conn.commit()
         
         cur.execute('SELECT * FROM phone_data;')
 
-        cur.execute('SELECT * FROM phone_data ORDER BY name asc;')
+        cur.execute('SELECT * FROM phone_data ORDER BY first_name asc;')
         
         print(cur.fetchone())
         
         # Update phone_number
         cur.execute("""UPDATE phone_data
             SET phone_number = '+77476737877'
-            WHERE name = 'Mariya';
+            WHERE first_name = 'Mariya';
             """)
         conn.commit()
         

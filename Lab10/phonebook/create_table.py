@@ -15,18 +15,19 @@ cur.execute('DROP TABLE phone_data')
 conn.commit()
 
 cur.execute("""CREATE TABLE phone_data(
-            name VARCHAR(255),
+            first_name VARCHAR(255),
+            last_name VARCHAR(255),
             phone_number VARCHAR(255)
 );""")
 
 conn.commit()
 
 # Create new numbers
-cur.execute("""INSERT INTO phone_data (name, phone_number) VALUES 
-            ('Ruslan', '+77007007070'),
-            ('Mariya', '+77077077070'),
-            ('Mansur', '+77077070700'),
-            ('Rasul', '+77077077077');
+cur.execute("""INSERT INTO phone_data (first_name, last_name, phone_number) VALUES 
+            ('Ruslan', 'Khamitov', '+77007007070'),
+            ('Mariya', 'Arystanova', '+77077077070'),
+            ('Mansur', 'Ozatbekuly', '+77077070700'),
+            ('Rasul', 'Zhumat', '+77077077077');
 """)
 
 conn.commit()
@@ -34,7 +35,7 @@ conn.commit()
 # Update phone_number
 cur.execute("""UPDATE phone_data
             SET phone_number = '+77476737877'
-            WHERE name = 'Mariya';
+            WHERE first_name = 'Mariya';
 """)
 
 conn.commit()
