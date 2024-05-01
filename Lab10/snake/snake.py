@@ -3,7 +3,7 @@ from random import randrange
 import time
 import psycopg2
 
-size = width, height = 750, 450
+size = width, height = 1050, 650
 block = 25
 
 x, y = randrange(0, width, block), randrange(0, height, block)
@@ -26,7 +26,8 @@ font_end = pygame.font.SysFont('Arial', 66, bold=True)
 font_level = pygame.font.SysFont('Arial', 26, bold=True)
 font_menu = pygame.font.SysFont('Arial', 85,bold=True)
 game_background = pygame.image.load('game_background.jpg').convert()
-menu_background = pygame.image.load('game_background.jpg').convert()
+menu_background = pygame.image.load('menu_background.jpg').convert()
+
 
 def login(name):
     cur.execute("SELECT name, score, level from SNAKE_GAME")
@@ -45,38 +46,39 @@ def record(name):
         if name == rows[0]:
             if result[1] >= int(rows[2]) and result[0] > int(rows[1]):
                 cur.execute(f"UPDATE SNAKE_GAME set score = {str(result[0])}, level = {str(result[1])} where name = '{name}'")
-                conn.commit()    
+                con.commit()    
                 return True
     return False 
 
 
-global conn, cur
+global con, cur
 
-conn = psycopg2.connect(
-    host = 'localhost',
-    dbname = 'snake',
-    user = 'postgres',
-    password = 'Araika06@'
-    )
+con = psycopg2.connect(
+    database='snake',
+    user='postgres',
+    password='Araika06@',
+    host="localhost",
+    port="5432"
+)
 
-cur = conn.cursor()
+cur = con.cursor()
 
 
 name = input('Input your name: ')
 
 if login(name):
     cur.execute(f'''INSERT INTO SNAKE_GAME (name, score, level) VALUES('{name}', 0, 0)''')
-    conn.commit()
+    con.commit()
     print('Welcome, new player!')
     
-conn.commit()
+con.commit()
 
 
 
 def main_menu():
     menu = True
     while menu:
-        screen.blit(menu_background,(0, 0))
+        screen.blit(menu_background, (0, 0))
         
         # menu text
         render_menu = font_menu.render('CLICK', True, pygame.Color('black'))
@@ -186,4 +188,4 @@ while True:
         dirs = {'W': True, 'S': True, 'A': False, 'D': True}
 
 
-conn.commit()
+con.commit()
