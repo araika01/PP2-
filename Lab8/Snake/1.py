@@ -108,7 +108,7 @@ def level_up(score, speed):
     if(score % 50 == 0):
         global level
         level += 1
-        speed += 20
+        speed += 5
         
 #Main Function
 while True:

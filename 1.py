@@ -1,11 +1,41 @@
-class Soda:
-    def __init__(self,soda, dobavka= str(input())):
-        self.soda = soda
-        self.dobavka = dobavka
-    def show_my_drink(self):
-        if self.dobavka in self.soda:
-            print(f"Soda with dobavka {self.dobavka}")
+import pygame
+
+pygame.init()
+
+screen = pygame.display.set_mode((400, 300))
+
+done = False
+is_blue = True
+
+x = 30
+y = 30
+
+clock = pygame.time.Clock()
+
+while not done:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            if_blue = not is_blue
+        
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_UP]:
+            y -= 3
+        if pressed[pygame.K_DOWN]:
+            y += 3
+        if pressed[pygame.K_RIGHT]:
+            x += 3
+        if pressed[pygame.K_LEFT]:
+            x -= 3
+            
+        screen.fill((0, 0, 0)) 
+        if is_blue:
+            color = (0, 128, 255)
         else:
-            print("Soda without dobavka")
-soda = Soda("Soda")
-print(soda)
+            color = (255, 100, 0)   
+    pygame.draw.rect(screen, color, pygame.Rect(x, y, 60, 60))  
+      
+    pygame.display.flip()
+    clock.tick(60)
+        

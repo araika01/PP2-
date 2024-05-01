@@ -1,22 +1,19 @@
 import os
-path = input()
-if os.path.isdir(path):
-    if not os.listdir(path):
-        print("There are not no folders and files")
-        exit()
-        
-    print("Folders and files: ")
-    for i in os.listdir(path):
-        print(i)
-    
-    print("\nFolders: ")
-    for i in os.listdir(path):
-        if os.path.isdir(path + '\\' + i):
-            print(i)
-            
-    print("\nFiles: ")
-    for i in os.listdir(path):
-        if os.path.isfile(path + "\\" + i):
-            print(i)
-        else:
-            print("No match")
+file = input()
+if os.path.isfile(file):
+    print("Press 1 to write text\nPress 2 to rewrite the file\nPress 3 to change")
+    func = int(input())
+    if func == 1:
+        file = open(file, 'a')
+        file.write(input('Add new txt: ') + '\n')
+        file.close()
+    elif func == 2:
+        file = open(file, 'w')
+        file.write(input('New txt: '))
+        file.close()
+    elif func == 3:
+        os.chdir(input())
+    else:
+        print('Incrrect')
+else:
+    print('Does not exist') 
