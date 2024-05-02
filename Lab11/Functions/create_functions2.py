@@ -24,18 +24,16 @@ def create_function(sql_query):
 
 if __name__ == '__main__':
     query1 = """
-            CREATE OR REPLACE FUNCTION phone_book(id INTEGER)
-            RETURNS TABLE(first_name VARCHAR, last_name VARCHAR, phone_number VARCHAR) AS
-            $$
-            BEGIN
-            RETURN QUERY
-
-            SELECT parts.first_name, parts.last_name, parts.phone_number
-            FROM parts;
-
-            END; $$
-
-            LANGUAGE plpgsql;
+            CREATE OR REPLACE FUNCTION pagination()
+            RETURNS TABLE(first_name VARCHAR, last_name VARCHAR, phone_number VARCHAR
+                )
+                AS $$
+                BEGIN
+                RETURN QUERY
+                SELECT * FROM phone_data
+                LIMIT 1 OFFSET 2;
+                END; $$
+                LANGUAGE plpgsql;
             """
     
     query2 = """
@@ -52,4 +50,4 @@ if __name__ == '__main__':
             LANGUAGE plpgsql;
             """
 
-    create_function(query2)
+    create_function(query1)

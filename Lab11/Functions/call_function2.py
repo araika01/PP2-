@@ -13,7 +13,7 @@ def get_parts():
             with conn.cursor() as cur:
                 # create a cursor object for execution
                 cur = conn.cursor()
-                cur.callproc('phone_book')
+                cur.callproc('pagination')
                 
                 # process the result set
                 row = cur.fetchone()
@@ -27,5 +27,5 @@ def get_parts():
         return parts
 
 if __name__ == '__main__':
-    parts = get_parts(1)
+    parts = get_parts()
     print(parts)
